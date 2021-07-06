@@ -1,4 +1,4 @@
-package com.seacreeper.craftsperson.views.creepers;
+package com.seacreeper.craftsperson.views.home;
 
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.HasStyle;

@@ -16,13 +16,9 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
-import com.seacreeper.craftsperson.views.MainLayout;
-import com.seacreeper.craftsperson.views.creepers.CreepersView;
-import com.seacreeper.craftsperson.views.httpcreeper.HTTPCreeperView;
+import com.seacreeper.craftsperson.views.home.CreepersView;
+import com.seacreeper.craftsperson.views.creeper.http.DefaultView;
 import com.seacreeper.craftsperson.views.about.AboutView;
 
 /**
@@ -83,7 +79,7 @@ public class MainLayout extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{createTab("Creepers", CreepersView.class), createTab("HTTP Creeper", HTTPCreeperView.class),
+        return new Tab[]{createTab("Creepers", CreepersView.class), createTab("HTTP Creeper", DefaultView.class),
                 createTab("About", AboutView.class)};
     }
 
