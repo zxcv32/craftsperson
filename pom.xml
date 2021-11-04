@@ -6,12 +6,12 @@
   <groupId>com.seacreeper.craftsperson</groupId>
   <artifactId>craftsperson</artifactId>
   <name>Sea Creeper Web UI</name>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
-    <java.version>16</java.version>
-    <vaadin.version>20.0.3</vaadin.version>
+    <java.version>17</java.version>
+    <vaadin.version>20.0.8</vaadin.version>
   </properties>
 
   <parent>
@@ -188,6 +188,10 @@
       <artifactId>webdrivermanager</artifactId>
       <version>4.4.0</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
     </dependency>
   </dependencies>
 
