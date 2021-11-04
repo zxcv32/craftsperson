@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScribeTalker {
 
-  @Value("${com.seacreeper.scribes.baseUrl}")
+  @Value("${seacreeper.scribes.baseUrl}")
   private String scribesAddress;
 
   private static final String scribesApiPath = "influxdb/recent";

@@ -1,6 +1,7 @@
 package com.seacreeper.craftsperson.views.creeper.http;
 
 import com.seacreeper.craftsperson.model.influxdb.HttpScribe;
+import com.seacreeper.craftsperson.service.QueenTalker;
 import com.seacreeper.craftsperson.service.ScribeTalker;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -15,6 +16,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.seacreeper.craftsperson.views.MainLayout;
+import java.util.concurrent.Future;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,6 +29,7 @@ import java.util.concurrent.ExecutionException;
 public class DefaultView extends SplitLayout {
 
   @Autowired private ScribeTalker scribeTalker;
+  @Autowired private QueenTalker queenTalker;
 
   public DefaultView() {
     addClassName("creeper-http-view");
@@ -51,7 +54,35 @@ public class DefaultView extends SplitLayout {
     submitUrl.addClickListener(
         e -> {
           Notification.show("Submitted: " + urlInput.getValue());
+          try {
+            val result = queenTalker.send(urlInput.getValue());
+            checkResult(result);
+          } catch (IOException ex) {
+            ex.printStackTrace();
+            Notification.show("Error: " + ex.getMessage());
+          }
         });
+  }
+
+  private void checkResult(Future<String> result) {
+    while (true) {
+      if (result.isDone()) {
+        try {
+          Notification.show(result.get());
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        } catch (ExecutionException e) {
+          e.printStackTrace();
+        }
+        recent();
+        break;
+      }
+      try {
+        Thread.sleep(100);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   @PostConstruct
@@ -65,9 +96,6 @@ public class DefaultView extends SplitLayout {
       grid.setColumns("dateTime", "data");
       grid.recalculateColumnWidths();
       grid.setHeightFull();
-//      val recentSection = new VerticalLayout();
-//      recentSection.setAlignItems(Alignment.END);
-//      recentSection.add(grid);
       setOrientation(Orientation.VERTICAL);
       setSplitterPosition(50);
       addToSecondary(grid);

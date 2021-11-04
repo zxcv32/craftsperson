@@ -20,10 +20,10 @@ import com.vaadin.flow.theme.lumo.Lumo;
 @SpringBootApplication
 @Theme(value = "craftsperson", variant = Lumo.DARK)
 @PWA(name = "Craftsperson", shortName = "Craftsperson", offlineResources = {"images/logo.png"})
-public class Application extends SpringBootServletInitializer implements AppShellConfigurator {
+public class Craftsperson extends SpringBootServletInitializer implements AppShellConfigurator {
 
     public static void main(String[] args) {
-        LaunchUtil.launchBrowserInDevelopmentMode(SpringApplication.run(Application.class, args));
+        LaunchUtil.launchBrowserInDevelopmentMode(SpringApplication.run(Craftsperson.class, args));
     }
 
 }
