@@ -302,5 +302,8 @@
       </build>
     </profile>
 
+    <profile>
+      <id>standalone</id>
+    </profile>
   </profiles>
 </project>

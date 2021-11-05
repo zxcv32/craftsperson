@@ -13,17 +13,17 @@ import com.vaadin.flow.theme.lumo.Lumo;
 /**
  * The entry point of the Spring Boot application.
  *
- * Use the @PWA annotation make the application installable on phones, tablets
- * and some desktop browsers.
- *
+ * <p>Use the @PWA annotation make the application installable on phones, tablets and some desktop
+ * browsers.
  */
 @SpringBootApplication
 @Theme(value = "craftsperson", variant = Lumo.DARK)
-@PWA(name = "Craftsperson", shortName = "Craftsperson", offlineResources = {"images/logo.png"})
+@PWA(
+    name = "Craftsperson",
+    shortName = "Craftsperson",
+    offlineResources = {"images/logo.png"})
 public class Craftsperson extends SpringBootServletInitializer implements AppShellConfigurator {
-
-    public static void main(String[] args) {
-        LaunchUtil.launchBrowserInDevelopmentMode(SpringApplication.run(Craftsperson.class, args));
-    }
-
+  public static void main(String[] args) {
+    LaunchUtil.launchBrowserInDevelopmentMode(SpringApplication.run(Craftsperson.class, args));
+  }
 }

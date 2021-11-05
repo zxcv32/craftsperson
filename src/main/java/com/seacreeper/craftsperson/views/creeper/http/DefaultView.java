@@ -2,7 +2,8 @@ package com.seacreeper.craftsperson.views.creeper.http;
 
 import com.seacreeper.craftsperson.model.influxdb.HttpScribe;
 import com.seacreeper.craftsperson.service.QueenTalker;
-import com.seacreeper.craftsperson.service.ScribeTalker;
+import com.seacreeper.craftsperson.service.scribe.ScribeTalker;
+import com.seacreeper.craftsperson.service.scribe.ScribeTalkerImpl;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.details.Details;
@@ -16,6 +17,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.seacreeper.craftsperson.views.MainLayout;
+import java.util.Optional;
 import java.util.concurrent.Future;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 @Route(value = "creeper/http", layout = MainLayout.class)
-@PageTitle("HTTP Creeper")
+@PageTitle("Creeper: HTTP")
 public class DefaultView extends SplitLayout {
 
   @Autowired private ScribeTalker scribeTalker;
@@ -90,7 +92,7 @@ public class DefaultView extends SplitLayout {
     try {
       val httpScribe = new HttpScribe();
       val grid = new Grid<>(HttpScribe.class);
-      val future = scribeTalker.readRecent();
+      val future = scribeTalker.readRecent(Optional.empty());
       val result = future.get();
       grid.setItems(result);
       grid.setColumns("dateTime", "data");
