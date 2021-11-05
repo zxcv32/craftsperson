@@ -2,7 +2,6 @@ package com.seacreeper.craftsperson.service.queen;
 
 import com.google.gson.Gson;
 import com.seacreeper.craftsperson.model.queen.QueenRequest;
-import com.seacreeper.craftsperson.service.queen.QueenTalker;
 import java.io.IOException;
 import java.util.concurrent.Future;
 import lombok.NonNull;

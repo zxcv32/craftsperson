@@ -1,5 +1,6 @@
 package com.seacreeper.craftsperson.views.home;
 
+import com.seacreeper.craftsperson.views.MainLayout;
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.Tag;
@@ -10,7 +11,6 @@ import com.vaadin.flow.component.template.Id;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
-import com.seacreeper.craftsperson.views.MainLayout;
 import lombok.val;
 
 @Route(value = "creepers", layout = MainLayout.class)

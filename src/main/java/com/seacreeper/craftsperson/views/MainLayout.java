@@ -1,25 +1,24 @@
 package com.seacreeper.craftsperson.views;
 
-import java.util.Optional;
-
+import com.seacreeper.craftsperson.views.about.AboutView;
+import com.seacreeper.craftsperson.views.creeper.http.DefaultView;
+import com.seacreeper.craftsperson.views.home.CreepersView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
-import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.router.PageTitle;
-import com.seacreeper.craftsperson.views.home.CreepersView;
-import com.seacreeper.craftsperson.views.creeper.http.DefaultView;
-import com.seacreeper.craftsperson.views.about.AboutView;
+import com.vaadin.flow.router.RouterLink;
+import java.util.Optional;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -63,7 +62,7 @@ public class MainLayout extends AppLayout {
         HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/logo.png", "Craftsperson logo"));
+        logoLayout.add(new Image("image/logo.png", "Craftsperson logo"));
         logoLayout.add(new H1("Craftsperson"));
         layout.add(logoLayout, menu);
         return layout;
