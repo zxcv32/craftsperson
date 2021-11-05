@@ -1,9 +1,8 @@
 package com.seacreeper.craftsperson.views.creeper.http;
 
 import com.seacreeper.craftsperson.model.influxdb.HttpScribe;
-import com.seacreeper.craftsperson.service.QueenTalker;
+import com.seacreeper.craftsperson.service.queen.QueenTalker;
 import com.seacreeper.craftsperson.service.scribe.ScribeTalker;
-import com.seacreeper.craftsperson.service.scribe.ScribeTalkerImpl;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.details.Details;
@@ -70,7 +69,7 @@ public class DefaultView extends SplitLayout {
     while (true) {
       if (result.isDone()) {
         try {
-          Notification.show(result.get());
+          Notification.show(String.format("Executed: %s", result.get()));
         } catch (InterruptedException e) {
           e.printStackTrace();
         } catch (ExecutionException e) {
