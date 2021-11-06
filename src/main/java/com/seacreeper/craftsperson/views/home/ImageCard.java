@@ -9,6 +9,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.template.Id;
+import lombok.val;
 
 @JsModule("./views/creepers/image-card.ts")
 @Tag("image-card")
@@ -29,9 +30,8 @@ public class ImageCard extends LitTemplate {
     this.image.setSrc(imgUrl);
     this.image.setAlt(creeperName.toLowerCase());
     if (enable) {
-      this.getElement()
-          .addEventListener(
-              "click", e -> UI.getCurrent().navigate("creeper/" + creeperName.toLowerCase()));
+      val url = creeperName.toLowerCase().replaceAll("[^a-z0-9]?", "");
+      this.getElement().addEventListener("click", e -> UI.getCurrent().navigate("creeper/" + url));
     } else {
       this.getElement()
           .addEventListener("click", event -> Notification.show("Creeper unavailable"));

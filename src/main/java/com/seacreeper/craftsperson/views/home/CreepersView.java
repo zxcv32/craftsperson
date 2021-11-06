@@ -37,6 +37,16 @@ public class CreepersView extends LitTemplate implements HasComponents, HasStyle
     http.setBadge("Classic");
     add(http);
 
+    val postmanNewman =
+        new ImageCard(
+            "POSTMAN-NEWMAN",
+            "https://images.unsplash.com/photo-1562832135-14a35d25edef?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=815&q=80",
+            true);
+    postmanNewman.setSubTitle("Run postman collections");
+    postmanNewman.setBody("Run and automate postman collections");
+    postmanNewman.setBadge("Popular");
+    add(postmanNewman);
+
     val file =
         new ImageCard(
             "FILE",
@@ -86,16 +96,6 @@ public class CreepersView extends LitTemplate implements HasComponents, HasStyle
     gpu.setBody("Run on GPU");
     gpu.setBadge("Coming soon");
     add(gpu);
-
-    val postmanNewman =
-        new ImageCard(
-            "POSTMAN-NEWMAN",
-            "https://images.unsplash.com/photo-1562832135-14a35d25edef?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=815&q=80",
-            false);
-    postmanNewman.setSubTitle("Run postman collections");
-    postmanNewman.setBody("Run and automate postman collections");
-    postmanNewman.setBadge("Coming soon");
-    add(postmanNewman);
 
     val k6 =
         new ImageCard(

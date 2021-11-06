@@ -1,7 +1,6 @@
 package com.seacreeper.craftsperson.views;
 
 import com.seacreeper.craftsperson.views.about.AboutView;
-import com.seacreeper.craftsperson.views.creeper.http.DefaultView;
 import com.seacreeper.craftsperson.views.home.CreepersView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
@@ -20,89 +19,95 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import java.util.Optional;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
+/** The main view is a top-level placeholder for other views. */
 public class MainLayout extends AppLayout {
 
-    private final Tabs menu;
-    private H1 viewTitle;
+  private final Tabs menu;
+  private H1 viewTitle;
 
-    public MainLayout() {
-        setPrimarySection(Section.DRAWER);
-        addToNavbar(true, createHeaderContent());
-        menu = createMenu();
-        addToDrawer(createDrawerContent(menu));
-    }
+  public MainLayout() {
+    setPrimarySection(Section.DRAWER);
+    addToNavbar(true, createHeaderContent());
+    menu = createMenu();
+    addToDrawer(createDrawerContent(menu));
+  }
 
-    private Component createHeaderContent() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setClassName("sidemenu-header");
-        layout.getThemeList().set("dark", true);
-        layout.setWidthFull();
-        layout.setSpacing(false);
-        layout.setAlignItems(FlexComponent.Alignment.CENTER);
-        layout.add(new DrawerToggle());
-        viewTitle = new H1();
-        layout.add(viewTitle);
-        Avatar avatar = new Avatar();
-        avatar.addClassNames("ms-auto", "me-m");
-        layout.add(avatar);
-        return layout;
-    }
+  private Component createHeaderContent() {
+    HorizontalLayout layout = new HorizontalLayout();
+    layout.setClassName("sidemenu-header");
+    layout.getThemeList().set("dark", true);
+    layout.setWidthFull();
+    layout.setSpacing(false);
+    layout.setAlignItems(FlexComponent.Alignment.CENTER);
+    layout.add(new DrawerToggle());
+    viewTitle = new H1();
+    layout.add(viewTitle);
+    Avatar avatar = new Avatar();
+    avatar.addClassNames("ms-auto", "me-m");
+    layout.add(avatar);
+    return layout;
+  }
 
-    private Component createDrawerContent(Tabs menu) {
-        VerticalLayout layout = new VerticalLayout();
-        layout.setClassName("sidemenu-menu");
-        layout.setSizeFull();
-        layout.setPadding(false);
-        layout.setSpacing(false);
-        layout.getThemeList().set("spacing-s", true);
-        layout.setAlignItems(FlexComponent.Alignment.STRETCH);
-        HorizontalLayout logoLayout = new HorizontalLayout();
-        logoLayout.setId("logo");
-        logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("image/logo.png", "Craftsperson logo"));
-        logoLayout.add(new H1("Craftsperson"));
-        layout.add(logoLayout, menu);
-        return layout;
-    }
+  private Component createDrawerContent(Tabs menu) {
+    VerticalLayout layout = new VerticalLayout();
+    layout.setClassName("sidemenu-menu");
+    layout.setSizeFull();
+    layout.setPadding(false);
+    layout.setSpacing(false);
+    layout.getThemeList().set("spacing-s", true);
+    layout.setAlignItems(FlexComponent.Alignment.STRETCH);
+    HorizontalLayout logoLayout = new HorizontalLayout();
+    logoLayout.setId("logo");
+    logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+    logoLayout.add(new Image("image/logo.png", "Craftsperson logo"));
+    logoLayout.add(new H1("Craftsperson"));
+    layout.add(logoLayout, menu);
+    return layout;
+  }
 
-    private Tabs createMenu() {
-        final Tabs tabs = new Tabs();
-        tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
-        tabs.setId("tabs");
-        tabs.add(createMenuItems());
-        return tabs;
-    }
+  private Tabs createMenu() {
+    final Tabs tabs = new Tabs();
+    tabs.setOrientation(Tabs.Orientation.VERTICAL);
+    tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
+    tabs.setId("tabs");
+    tabs.add(createMenuItems());
+    return tabs;
+  }
 
-    private Component[] createMenuItems() {
-        return new Tab[]{createTab("Creepers", CreepersView.class), createTab("HTTP Creeper", DefaultView.class),
-                createTab("About", AboutView.class)};
-    }
+  private Component[] createMenuItems() {
+    return new Tab[] {
+      createTab("Creepers", CreepersView.class),
+      createTab("Creeper: HTTP", com.seacreeper.craftsperson.views.creeper.http.DefaultView.class),
+      createTab(
+          "Creeper: POSTMAN-NEWMAN",
+          com.seacreeper.craftsperson.views.creeper.postmannewman.DefaultView.class),
+      createTab("About", AboutView.class)
+    };
+  }
 
-    private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
-        final Tab tab = new Tab();
-        tab.add(new RouterLink(text, navigationTarget));
-        ComponentUtil.setData(tab, Class.class, navigationTarget);
-        return tab;
-    }
+  private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
+    final Tab tab = new Tab();
+    tab.add(new RouterLink(text, navigationTarget));
+    ComponentUtil.setData(tab, Class.class, navigationTarget);
+    return tab;
+  }
 
-    @Override
-    protected void afterNavigation() {
-        super.afterNavigation();
-        getTabForComponent(getContent()).ifPresent(menu::setSelectedTab);
-        viewTitle.setText(getCurrentPageTitle());
-    }
+  @Override
+  protected void afterNavigation() {
+    super.afterNavigation();
+    getTabForComponent(getContent()).ifPresent(menu::setSelectedTab);
+    viewTitle.setText(getCurrentPageTitle());
+  }
 
-    private Optional<Tab> getTabForComponent(Component component) {
-        return menu.getChildren().filter(tab -> ComponentUtil.getData(tab, Class.class).equals(component.getClass()))
-                .findFirst().map(Tab.class::cast);
-    }
+  private Optional<Tab> getTabForComponent(Component component) {
+    return menu.getChildren()
+        .filter(tab -> ComponentUtil.getData(tab, Class.class).equals(component.getClass()))
+        .findFirst()
+        .map(Tab.class::cast);
+  }
 
-    private String getCurrentPageTitle() {
-        PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
-        return title == null ? "" : title.value();
-    }
+  private String getCurrentPageTitle() {
+    PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
+    return title == null ? "" : title.value();
+  }
 }
