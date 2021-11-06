@@ -95,10 +95,10 @@ public class DefaultView extends SplitLayout {
   }
 
   private Component getConfigurator() {
-    Tab d = new Tab("Parameters");
-    Tab payment = new Tab("Header");
-    Tab shipping = new Tab("Configure");
-    Tabs tabs = new Tabs(d, payment, shipping);
+    Tab parameters = new Tab("Parameters");
+    Tab header = new Tab("Header");
+    Tab configure = new Tab("Configure");
+    Tabs tabs = new Tabs(parameters, header, configure);
     tabs.setWidthFull();
     return tabs;
   }
