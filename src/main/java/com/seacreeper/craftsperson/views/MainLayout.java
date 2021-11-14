@@ -1,6 +1,8 @@
 package com.seacreeper.craftsperson.views;
 
 import com.seacreeper.craftsperson.views.about.AboutView;
+import com.seacreeper.craftsperson.views.creeper.http.HttpDefaultView;
+import com.seacreeper.craftsperson.views.creeper.postmannewman.PostmanNewmanDefaultView;
 import com.seacreeper.craftsperson.views.home.CreepersView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
@@ -77,10 +79,10 @@ public class MainLayout extends AppLayout {
   private Component[] createMenuItems() {
     return new Tab[] {
       createTab("Creepers", CreepersView.class),
-      createTab("Creeper: HTTP", com.seacreeper.craftsperson.views.creeper.http.DefaultView.class),
+      createTab("Creeper: HTTP", HttpDefaultView.class),
       createTab(
           "Creeper: POSTMAN-NEWMAN",
-          com.seacreeper.craftsperson.views.creeper.postmannewman.DefaultView.class),
+          PostmanNewmanDefaultView.class),
       createTab("About", AboutView.class)
     };
   }

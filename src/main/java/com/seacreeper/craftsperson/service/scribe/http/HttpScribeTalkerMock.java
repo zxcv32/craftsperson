@@ -1,6 +1,6 @@
-package com.seacreeper.craftsperson.service.scribe;
+package com.seacreeper.craftsperson.service.scribe.http;
 
-import com.seacreeper.craftsperson.model.influxdb.HttpScribe;
+import com.seacreeper.craftsperson.service.scribe.http.model.HttpScribe;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Profile("standalone")
 @Service
-public class ScribeTalkerMock implements ScribeTalker {
+public class HttpScribeTalkerMock implements HttpScribeTalker {
 
   @Override
   @Async

@@ -1,8 +1,8 @@
 package com.seacreeper.craftsperson.views.creeper.http;
 
-import com.seacreeper.craftsperson.model.influxdb.HttpScribe;
 import com.seacreeper.craftsperson.service.queen.QueenTalker;
-import com.seacreeper.craftsperson.service.scribe.ScribeTalker;
+import com.seacreeper.craftsperson.service.scribe.http.HttpScribeTalker;
+import com.seacreeper.craftsperson.service.scribe.http.model.HttpScribe;
 import com.seacreeper.craftsperson.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -32,13 +32,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "creeper/http", layout = MainLayout.class)
 @PageTitle("Creeper: HTTP")
-public class DefaultView extends SplitLayout {
+public class HttpDefaultView extends SplitLayout {
 
-  @Autowired private ScribeTalker scribeTalker;
+  @Autowired private HttpScribeTalker httpScribeTalker;
   @Autowired private QueenTalker queenTalker;
   private Grid grid;
 
-  public DefaultView() {
+  public HttpDefaultView() {
     this.grid = new Grid<>(HttpScribe.class);
     configureHistoryGrid();
     addClassName("creeper-http-view");
@@ -47,7 +47,7 @@ public class DefaultView extends SplitLayout {
   }
 
   private void configureHistoryGrid() {
-    grid.setColumns("dateTime", "data");
+    grid.setColumns("timestamp", "data");
     grid.recalculateColumnWidths();
     grid.setHeightFull();
     setOrientation(Orientation.VERTICAL);
@@ -142,7 +142,7 @@ public class DefaultView extends SplitLayout {
   private void recent() {
     try {
       val httpScribe = new HttpScribe();
-      val future = scribeTalker.readRecent(Optional.empty());
+      val future = httpScribeTalker.readRecent(Optional.empty());
       val result = future.get();
       grid.setItems(result);
     } catch (IOException e) {

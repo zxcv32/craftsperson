@@ -1,6 +1,7 @@
 package com.seacreeper.craftsperson.views.creeper.postmannewman;
 
-import com.seacreeper.craftsperson.model.influxdb.HttpScribe;
+import com.seacreeper.craftsperson.service.scribe.postmannewman.ScribePostmanNewmanTalker;
+import com.seacreeper.craftsperson.service.scribe.postmannewman.model.Data;
 import com.seacreeper.craftsperson.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -15,22 +16,28 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MultiFileMemoryBuffer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import javax.annotation.PostConstruct;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "creeper/postmannewman", layout = MainLayout.class)
 @PageTitle("Creeper: POSTMAN-NEWMAN")
-public class DefaultView extends SplitLayout {
+public class PostmanNewmanDefaultView extends SplitLayout {
 
+  @Autowired
+  private ScribePostmanNewmanTalker scribePostmanNewmanTalker;
   private Grid grid;
 
-  public DefaultView() {
-    this.grid = new Grid<>(HttpScribe.class);
+  public PostmanNewmanDefaultView() {
+    this.grid = new Grid<>(Data.class);
     configureHistoryGrid();
     addToPrimary(getPrimary());
     addToSecondary(getSecondary());
@@ -40,7 +47,7 @@ public class DefaultView extends SplitLayout {
   }
 
   private void configureHistoryGrid() {
-    grid.setColumns("dateTime", "data");
+    grid.setColumns("timestamp", "url");
     grid.recalculateColumnWidths();
     grid.setHeightFull();
     setOrientation(Orientation.VERTICAL);
@@ -95,5 +102,20 @@ public class DefaultView extends SplitLayout {
             "About POSTMAN-NEWMAN Creeper",
             new Text("HTTP Creeper runs Postman collection on Newman command-line runner"));
     return details;
+  }
+
+  @PostConstruct
+  private void recent() {
+    try {
+      val future = scribePostmanNewmanTalker.readRecent(Optional.empty());
+      val result = future.get();
+      grid.setItems(result.getData());
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 }
